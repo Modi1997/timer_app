@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>document</title>
+        
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap");
+            body {
+                font-family: "Kdam Thmor Pro", sans-serif;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                width: 100wh;
+            }
+            #timer {
+                font-size: 360px;
+                font-weight: bolder;
+                color: rgb(43, 43, 43);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #timerEditor {
+                display: none;
+                padding-right: 20px;
+            }
+            #timerEditor input {
+                border: 1px solid #757575;
+                padding: 10px;
+                margin-right: 20px;
+                border-radius: 4px;
+                width: 400px;
+            }
+            #features {
+                height: 80vh;
+                font-size: 35px;
+                font-weight: bolder;
+                color: rgb(43, 43, 43);
+            }
+            #content {
+                position: relative;
+                top: 0px;
+                right: 0px;
+            }
+            #content img {
+                position: absolute;
+                top: -800px;
+                right: 0px;
+            }
+        </style>
+    </head>
+    <body onload="start()">
+        <div id="features"> Date <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);"> 
+            <br> Course <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);"> 
+            <br> Module <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);">    
+
+        <div id="timerEditor">
+            <input placeholder="Type the minutes" id="timerInput" /> 
+            
+            <button id="updateButton" onclick="updateTimer()" style="margin-right: 10px">Update</button>
+        </div>
+            
+        <button id= "startButton" onclick="start()" style="margin-right: 10px">
+            Start
+        </button>
+
+        <button id="stopButton" onclick="stop()" style="margin-right: 10px">
+            Stop
+        </button>
+
+        <button id="editButton" onclick="showEditTimer()">
+            Edit
+        </button>
+
+        <div id="timer"></div>
+        <div id="content">
+            <img src="https://cdn.wpmeducation.com/53544f/fa743b0402/3FE9-8F35-4363-AB5D-3C02.jpg" class="ribbon" alt="" height="300" width="700" />
+        </div>
+        <script>
+            function updateTimer() {
+                document.getElementById("stopButton").style.display = "block";
+                document.getElementById("editButton").style.display = "block";
+                document.getElementById("timerEditor").style.display = "none";
+
+                let input = document.getElementById("timerInput");
+                let newMinutes = parseInt(input.value);
+                timerStartMinutes = newMinutes;
+                time = timerStartMinutes * 60;
+                start();
+            }
+
+            function showEditTimer() {
+                stop();
+                document.getElementById("stopButton").style.display = "none";
+                document.getElementById("startButton").style.display = "none";
+                document.getElementById("editButton").style.display = "none";
+                document.getElementById("timer").style.display = "none";
+                document.getElementById("timerEditor").style.display = "block";
+            }
+            let timerStartMinutes = 60;
+            let time = timerStartMinutes * 60;
+
+            let interval;
+
+            function start() {
+                document.getElementById("timer").innerHTML = "";
+                interval = setInterval(timer, 1000);
+                document.getElementById("stopButton").style.display = "block";
+                document.getElementById("startButton").style.display = "none";
+                document.getElementById("timer").style.display = "block";
+            }
+            
+            function stop() {
+                clearInterval(interval);
+                document.getElementById("stopButton").style.display = "none";
+                document.getElementById("startButton").style.display = "block";
+            }
+
+            function timer() {
+                let minutes = Math.floor(time / 60);
+                let seconds = time % 60;
+
+                let timerDOMElement = document.getElementById("timer");
+
+                timerDOMElement.innerHTML = `${
+                    minutes <10? "0"+minutes:minutes
+                }:${seconds <10? "0"+seconds:seconds}`;
+                
+                
+                if (time>5400){
+                    time--;
+                    setTimeout(function(){
+                    document.getElementById('nostanding').style.display = 'block';
+                    },10);
+                    setTimeout(function(){
+                    document.getElementById('standing').style.display = 'none';
+                    },10);
+                }
+                else if (time>1800 && time<=5400) {
+                    time--;
+                    setTimeout(function(){
+                    document.getElementById('nostanding').style.display = 'none';
+                    },10);
+                    setTimeout(function(){
+                    document.getElementById('standing').style.display = 'block';
+                    },10);
+                }
+                else if (time<=1800){
+                    time--;
+                    setTimeout(function(){
+                    document.getElementById('nostanding').style.display = 'block';
+                    },10);
+                    setTimeout(function(){
+                    document.getElementById('standing').style.display = 'none';
+                    },10);
+                }
+                return;
+            }
+        </script> 
+        <img id="nostanding" src="https://createsigns.co.nz/wp-content/uploads/2017/11/No-Standing-Sign-723x1024.png" height="250" width="250"style="display:none;position:absolute;bottom:20px;right:15px;" />
+        <img id="standing" src="https://media.istockphoto.com/id/1153822085/vector/emergency-exit.jpg?s=612x612&w=0&k=20&c=4MGEQWooMuKgwlsapH5hcM2_kpSWLbHfvvaclIsKY7o=" height="250" width="250"style="display:none;position:absolute;bottom:20px;right:15px;" />
+    </body>
+</html>
