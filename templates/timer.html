@@ -51,16 +51,31 @@
                 top: -800px;
                 right: 0px;
             }
+            #p1 {margin-left: -40px;
+                left: 500px; 
+                margin-top: -50px;
+                color: rgb(87, 129, 7); 
+                left: 20vh;}
+            #p2 {margin-left: -40px; 
+                margin-top: -50px;
+                color: rgb(141, 7, 7);}
+            #p3 {margin-left: -40px; 
+                margin-top: -50px;
+                color: rgb(43, 126, 235);}
+
+            p { margin-top: -10px;
+                margin: 50px;
+                display:inline;}
         </style>
     </head>
     <body onload="start()">
         <div id="features"> Date <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);"> 
             <br> Course <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);"> 
             <br> Module <input type="text" style="height:40px;font-size:25pt;font-weight:bolder;color:rgb(206, 148, 39);">    
-
+    
         <div id="timerEditor">
             <input placeholder="Type the minutes" id="timerInput" /> 
-            
+        
             <button id="updateButton" onclick="updateTimer()" style="margin-right: 10px">Update</button>
         </div>
             
@@ -75,11 +90,19 @@
         <button id="editButton" onclick="showEditTimer()">
             Edit
         </button>
+        
+        <p><b>Start Time</b></p>
+        <p id="p1" ></p>
+        <p><b>End Time</b></p>
+        <p id="p2" ></p>
+        <p><b>Duration</b></p>
+        <p id="p3" ></p>
 
         <div id="timer"></div>
         <div id="content">
             <img src="https://cdn.wpmeducation.com/53544f/fa743b0402/3FE9-8F35-4363-AB5D-3C02.jpg" class="ribbon" alt="" height="300" width="700" />
         </div>
+        
         <script>
             function updateTimer() {
                 document.getElementById("stopButton").style.display = "block";
@@ -91,6 +114,17 @@
                 timerStartMinutes = newMinutes;
                 time = timerStartMinutes * 60;
                 start();
+                
+                var date = new Date();
+                var current_time = date.getHours()+":"+(date.getMinutes()<10?'0':'') + date.getMinutes();
+                document.getElementById("p1").innerHTML = current_time;
+
+                var end_date = new Date();
+                var mins = time/60;
+                end_date.setMinutes(end_date.getMinutes()+mins);
+                var current_end_time = end_date.getHours()+":"+(end_date.getMinutes()<10?'0':'') + end_date.getMinutes();
+                document.getElementById("p2").innerHTML = current_end_time;
+                document.getElementById("p3").innerHTML = mins;
             }
 
             function showEditTimer() {
